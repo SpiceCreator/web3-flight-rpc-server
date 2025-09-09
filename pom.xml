@@ -31,7 +31,7 @@
                 <version>3.5.3</version>
                 <configuration>
                     <argLine>
-                        --add-opens=java.base/java.nio=ALL-UNNAMED
+                        --add-opens=java.base/java.nio=org.apache.arrow.memory.core,ALL-UNNAMED
                     </argLine>
                 </configuration>
             </plugin>
