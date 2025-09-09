@@ -64,7 +64,7 @@ public class FlightRpcServer {
 
         log.info("Starting Ethereum to Arrow Flight Server, node url: {}", ethereumNodeUrl);
 
-        Location serverLocation = Location.forGrpcInsecure("127.0.0.1", flightPort);
+        Location serverLocation = Location.forGrpcInsecure("0.0.0.0", flightPort);
 
         // TODO add configuration to run ipc/ws
         Web3j web3 = Web3j.build(new HttpService(ethereumNodeUrl));
@@ -79,8 +79,11 @@ public class FlightRpcServer {
                              new SubscriptionFactory(allocator, new Converter(), executorService)))
                      .build()) {
 
+
             server.start();
-            log.info("Flight server started on port {}", flightPort);
+
+            Location location = server.getLocation();
+            log.info("Flight server started on {}", location.getUri());
 
             try {
                 server.awaitTermination();
