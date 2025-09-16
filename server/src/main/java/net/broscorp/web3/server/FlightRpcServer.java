@@ -13,6 +13,7 @@ import org.apache.arrow.memory.RootAllocator;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.http.HttpService;
 
+import java.net.InetSocketAddress;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -64,7 +65,9 @@ public class FlightRpcServer {
 
         log.info("Starting Ethereum to Arrow Flight Server, node url: {}", ethereumNodeUrl);
 
-        Location serverLocation = Location.forGrpcInsecure("0.0.0.0", flightPort);
+        InetSocketAddress addr = new InetSocketAddress("0.0.0.0", flightPort);
+        Location serverLocation = Location.forGrpcInsecure(addr.getHostString(), addr.getPort());
+
 
         // TODO add configuration to run ipc/ws
         Web3j web3 = Web3j.build(new HttpService(ethereumNodeUrl));
